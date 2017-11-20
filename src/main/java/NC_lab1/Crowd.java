@@ -1,7 +1,5 @@
 package NC_lab1;
 
-import com.sun.tools.javac.util.ArrayUtils;
-
 public class Crowd {
 
     private Person[] people;

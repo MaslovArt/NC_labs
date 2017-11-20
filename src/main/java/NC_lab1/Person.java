@@ -11,8 +11,7 @@ public class Person {
     public Person(LocalDate date, String surname) {
         this.birthday = date;
         this.surname = surname;
-        maxID++;
-        this.id = maxID;
+        this.id = ++maxID;
     }
 
     public int getAge() {
