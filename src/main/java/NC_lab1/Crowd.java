@@ -1,5 +1,7 @@
 package NC_lab1;
 
+import com.sun.tools.javac.util.ArrayUtils;
+
 public class Crowd {
 
     private Person[] people;
@@ -18,6 +20,7 @@ public class Crowd {
     public Person getAt(int index) {
         return people[index];
     }
+
 
     public void add(Person pers) {
         if (_count == capacity) {

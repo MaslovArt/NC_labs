@@ -32,4 +32,14 @@ public class Person {
     public String toString() {
         return this.getClass().getSimpleName() + " [Id - " + id + ", Surname - " + surname + ", birthday - " + birthday.toString() + "]";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Person))return false;
+
+        Person other = (Person)obj;
+        return other.id == this.id ? true : false;
+    }
 }

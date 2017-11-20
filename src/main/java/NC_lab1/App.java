@@ -25,7 +25,7 @@ public class App {
         System.out.println("Add new");
         People.add(new Person(new LocalDate(2010, 10, 20), "Artik"));
         show(People);
-
+        
         int i = 0;
     }
 }
