@@ -3,29 +3,42 @@ package NC_lab1;
 import org.joda.time.LocalDate;
 
 public class App {
-
-    private static void show(Crowd crowd) {
-        for (int i = 0; i < crowd.Count(); i++) {
-            System.out.println(crowd.getAt(i).toString());
-        }
-    }
-
     public static void main(String[] args) {
-        Crowd People = new Crowd(2);
+        MyArrayList<Person> People = new MyArrayList<>(2);
 
         for (int i = 0; i < 10; i++) {
-            People.add(new Person(new LocalDate(2010, 10, 20), "Surname" + i));
+            People.add(Person.CreateRandPerson());
         }
-        show(People);
-        System.out.println("Del at index 0");
-        People.removeAt(0);
-        System.out.println("Del with id 5");
-        People.removeById(5);
-        show(People);
+
+        People.print();
         System.out.println("Add new");
         People.add(new Person(new LocalDate(2010, 10, 20), "Artik"));
-        show(People);
+        People.print();
+        System.out.println();
 
-        int i = 0;
+        People.sort((o1, o2) -> o2.getAge() - o1.getAge());
+        System.out.println("Sorted by age");
+        People.print();
+
+        System.out.println("Sorted by surname");
+        People.sort((o1, o2)->o1.getSurname().compareTo(o2.getSurname()));
+        People.print();
+
+        System.out.println("Sorted by id");
+        People.sort((o1, o2) -> o1.getId().compareTo(o2.getId()));
+        People.print();
+
+        System.out.println("Find person with name Artik");
+        Person p1 = People.find((o1)->(o1.getSurname().equals("Artik")));
+        if(p1 != null)
+            p1.print();
+
+        System.out.println("Remove by index 1");
+        People.removeAt(1);
+        People.print();
+
+        System.out.println("Remove by name \"Artik\"");
+        People.remove((o1)->(o1.getSurname().equals("Artik")));
+        People.print();
     }
 }

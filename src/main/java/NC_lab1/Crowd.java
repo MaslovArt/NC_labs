@@ -1,5 +1,7 @@
 package NC_lab1;
 
+import java.util.Comparator;
+
 public class Crowd {
 
     private Person[] people;
@@ -20,8 +22,24 @@ public class Crowd {
     public int Count() {
         return _count;
     }
-    public Person getAt(int index) {
+
+    public Person getByIndex(int index) {
         return people[index];
+    }
+    public Person getById(String id) {
+        for (int i = 0; i < people.length; i++) {
+            if (people[i].getId() == id) {
+                return people[i];
+            }
+        }
+        return null;
+    }
+    public Person getByName(String surname) {
+        for (int i = 0; i < people.length; i++) {
+            if (people[i].getSurname().toLowerCase().equals(surname.toLowerCase()))
+                return people[i];
+        }
+        return null;
     }
 
     /**
@@ -38,7 +56,6 @@ public class Crowd {
         people[_count] = pers;
         _count++;
     }
-
     /**
      * Удаление из коллекции по индексу
      * @param index Индекс
@@ -51,12 +68,11 @@ public class Crowd {
         _count--;
         capacity--;
     }
-
     /**
      * Удаление из коллекции по id
      * @param id Айди
      */
-    public void removeById(int id) {
+    public void removeById(String id) {
         for (int i = 0; i < people.length; i++) {
             if (people[i].getId() == id) {
                 removeAt(i);
@@ -65,8 +81,39 @@ public class Crowd {
         }
     }
 
+
+    /**
+     * Сортирует по заданному условию
+     * @param compare Правило сравнения
+     * @return Возвращает отсортированный массив
+     */
+    public Person[] sort(Comparator<Person> compare) {
+        Person[] sorted = bubbleSort(people, compare);
+        people = sorted;
+        return sorted;
+    }
+
+    private Person[] bubbleSort(Person[] arr, Comparator<Person> compare) {
+        for (int i = _count - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (compare.compare(arr[j], arr[j + 1]) >= 1) {
+                    Person t = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = t;
+                }
+            }
+        }
+        return arr;
+    }
+
     @Override
     public String toString() {
         return capacity + " " + _count;
+    }
+
+    public void Print() {
+        for (int i = 0; i < _count; i++) {
+            System.out.println(people[i].toString());
+        }
     }
 }
