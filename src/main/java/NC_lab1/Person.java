@@ -32,7 +32,13 @@ public class Person {
     }
 
     public int getAge() {
-        return new DateTime().getYear() - birthday.getYear();
+        DateTime currentDate = new DateTime();
+        int fullYears = currentDate.getYear() - birthday.getYear();
+        if(currentDate.monthOfYear().get() > birthday.monthOfYear().get() ||
+                currentDate.monthOfYear().get() == birthday.monthOfYear().get() &&
+                currentDate.dayOfMonth().get() > birthday.dayOfMonth().get())
+            fullYears++;
+        return fullYears;
     }
     public String getId() {
         return id.toString();
@@ -46,7 +52,10 @@ public class Person {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + " [Id - " + id + ", Surname - " + surname + ", birthday - " + birthday.toString() + "]";
+        return this.getClass().getSimpleName() +
+                " [Id - " + id +
+                ", Surname - " + surname +
+                ", birthday - " + birthday.toString() +"]";
     }
 
     public void print() {

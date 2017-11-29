@@ -17,10 +17,9 @@ public class MyArrayList<T> {
     public <T> MyArrayList(int capacity) {
         this.capacity = capacity;
         items = new Object[this.capacity];
-
     }
 
-    public int Count() {
+    public int сount() {
         return count;
     }
 
@@ -28,6 +27,14 @@ public class MyArrayList<T> {
         return (T)items[index];
     }
 
+
+    public boolean contains(T item) {
+        for (int i = 0; i < count; i++) {
+            if(((T)items[i]).equals(item))
+                return true;
+        }
+        return false;
+    }
     /**
      * Добавление в коллекцию
      * @param pers новый объект
@@ -82,25 +89,56 @@ public class MyArrayList<T> {
     /**
      * Сортирует по заданному условию
      * @param compare Правило сравнения
+     * @param param Вид сортировки: 0 - пузырьком, 1 - шейкерная
      * @return Возвращает отсортированный массив
      */
-    public T[] sort(Comparator<T> compare) {
-        Object[] sorted = bubbleSort(items, compare);
-        items = sorted;
-        return (T[])sorted;
+    public T[] sort(Comparator<T> compare, int param) {
+        switch (param) {
+            case 0: bubbleSortT((T[])items, compare); break;
+            case 1: shakerSortT((T[])items, compare); break;
+            default: return (T[])items;
+        }
+        return (T[])items;
     }
 
-    private T[] bubbleSort(Object[] arr, Comparator<T> compare) {
+    private <T> void bubbleSortT(T[] arr, Comparator<T> compare) {
         for (int i = count - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
-                if (compare.compare((T)arr[j], (T)arr[j + 1]) >= 1) {
-                    Object t = arr[j];
+                if (compare.compare(arr[j], arr[j + 1]) >= 1) {
+                    T t = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = t;
                 }
             }
         }
-        return (T[])arr;
+    }
+    private <T> void shakerSortT(T[] mas, Comparator<T> comp){
+        boolean wasSwapped;
+        T temp;
+        do {
+            wasSwapped=false;
+            for (int i = 0; i < count - 2; i++) {
+                if (comp.compare(mas[i], mas[i + 1])>=1) {
+                    temp = mas[i];
+                    mas[i]=mas[i+1];
+                    mas[i+1]=temp;
+                    wasSwapped=true;
+                }
+            }
+
+            if(!wasSwapped) break;
+
+            wasSwapped=false;
+            for (int j = count-2; j >= 0; j--) {
+                if(comp.compare(mas[j],mas[j+1])>=1){
+                    temp = mas[j];
+                    mas[j]=mas[j+1];
+                    mas[j+1]=temp;
+                    wasSwapped=true;
+                }
+            }
+
+        } while(wasSwapped);
     }
 
     @Override
