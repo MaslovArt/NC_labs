@@ -1,7 +1,7 @@
 package NC_lab1;
 
 import NC_lab1.entity.Person;
-import NC_lab1.myCollection.MyArrayList;
+import NC_lab1.myCollection.MyArrayListT;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
@@ -9,9 +9,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MyArrayListTest {
+public class MyArrayListTTest {
 
-    private MyArrayList<Person> people;
+    private MyArrayListT<Person> people;
     private void initListWithDefaultValues() {
         people.add(new Person(new LocalDate(2010, 10, 20), "Artik"));
         people.add(new Person(new LocalDate(2000, 10, 20), "Julia"));
@@ -21,7 +21,7 @@ public class MyArrayListTest {
 
     @Before
     public void setUp() throws Exception {
-        people = new MyArrayList<>(8);
+        people = new MyArrayListT<>(8);
     }
 
     @After

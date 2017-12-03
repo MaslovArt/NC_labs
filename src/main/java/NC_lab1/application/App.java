@@ -12,7 +12,8 @@ public class App {
     private static Logger log = LogManager.getLogger(App.class.getName());
 
     public static void main(String[] args) {
-        MyArrayList<Person> People = new MyArrayList<>(2);
+        //MyArrayListT<Person> People = new MyArrayListT<>(2);
+        MyArrayList People = new MyArrayList(15);
 
         for (int i = 0; i < 10; i++) {
             Person pNew = Person.CreateRandPerson();
@@ -24,13 +25,13 @@ public class App {
         People.add(p1);
         log.info("Add to collection " + p1.toString());
 
-        People.sort((o1, o2) -> o2.getAge() - o1.getAge(), 1);
-        log.info("Sort collection by age.");
-
-        People.sort((o1, o2) -> o1.getId().compareTo(o2.getId()), 0);
+        People.sort((o1, o2) -> o1.getId().compareTo(o2.getId()));
         log.info("Sort collection by id.");
 
-        People.sort((o1, o2)->o1.getSurname().compareTo(o2.getSurname()), 0);
+        People.sort((o1, o2) -> o2.getAge() - o1.getAge());
+        log.info("Sort collection by age.");
+
+        People.sort((o1, o2)->o1.getSurname().compareTo(o2.getSurname()));
         log.info("Sort collection by surname.");
 
         Person pf = People.find((o1)->(o1.getSurname().equals("Artik")));
