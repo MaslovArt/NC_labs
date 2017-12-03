@@ -1,4 +1,4 @@
-package NC_lab1;
+package NC_lab1.entity;
 
 import org.joda.time.*;
 

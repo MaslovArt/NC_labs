@@ -1,4 +1,6 @@
-package NC_lab1;
+package NC_lab1.myCollection;
+
+import NC_lab1.entity.Person;
 
 import java.util.Comparator;
 import java.util.function.Predicate;
@@ -19,7 +21,7 @@ public class MyArrayList<T> {
         items = new Object[this.capacity];
     }
 
-    public int сount() {
+    public int size() {
         return count;
     }
 

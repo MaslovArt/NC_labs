@@ -1,5 +1,6 @@
 package NC_lab1;
 
+import NC_lab1.entity.Person;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;

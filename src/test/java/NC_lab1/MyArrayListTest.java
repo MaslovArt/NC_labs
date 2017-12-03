@@ -1,5 +1,7 @@
 package NC_lab1;
 
+import NC_lab1.entity.Person;
+import NC_lab1.myCollection.MyArrayList;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
@@ -31,7 +33,7 @@ public class MyArrayListTest {
     public void сount() throws Exception {
         int expectedCount = 4;
         initListWithDefaultValues();
-        assertEquals(expectedCount, people.сount());
+        assertEquals(expectedCount, people.size());
     }
 
     @Test
@@ -48,15 +50,15 @@ public class MyArrayListTest {
     @Test
     public void add() throws Exception {
         people.add(new Person(new LocalDate(2010, 10, 20), "Julia1"));
-        assertEquals(1,people.сount());
+        assertEquals(1,people.size());
 
         people.add(new Person(new LocalDate(2010, 10, 20), "Julia2"));
-        assertEquals(2,people.сount());
+        assertEquals(2,people.size());
         assertEquals("Julia2", people.get(1).getSurname());
         assertEquals("Julia1", people.get(0).getSurname());
 
         people.add(new Person(new LocalDate(2010, 10, 20), "Julia3"));
-        assertEquals(3,people.сount());
+        assertEquals(3,people.size());
         assertEquals("Julia3", people.get(2).getSurname());
         assertEquals("Julia2", people.get(1).getSurname());
         assertEquals("Julia1", people.get(0).getSurname());
@@ -66,11 +68,11 @@ public class MyArrayListTest {
     public void removeAt() throws Exception {
         initListWithDefaultValues();
 
-        assertEquals(4,people.сount());
+        assertEquals(4,people.size());
         assertEquals("Julia", people.get(1).getSurname());
 
         people.removeAt(1);
-        assertEquals(3,people.сount());
+        assertEquals(3,people.size());
         assertEquals("Ann", people.get(1).getSurname());
     }
 
@@ -78,11 +80,11 @@ public class MyArrayListTest {
     public void remove() throws Exception {
         initListWithDefaultValues();
 
-        assertEquals(4,people.сount());
+        assertEquals(4,people.size());
         assertEquals("Julia", people.get(1).getSurname());
 
         people.remove((o1)->o1.getSurname().equals("Julia"));
-        assertEquals(3,people.сount());
+        assertEquals(3,people.size());
         assertEquals("Ann", people.get(1).getSurname());
     }
 
