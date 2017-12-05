@@ -1,59 +1,26 @@
 package NC_lab1.myCollection;
 
-import NC_lab1.sorters.sortInterface.ISorter;
+import NC_lab1.sorters.sortInterface.ISorterT;
 import NC_lab1.entity.Person;
+import NC_lab1.sorters.sorter.BubbleSorterT;
 
 import java.util.Comparator;
 import java.util.function.Predicate;
 
-public class MyArrayListT<T> {
-    private Object[] items;
-    private ISorter sorter;
-    /**
-     * Кол-во элементов в коллекции
-     */
-    private int count = 0;
-    /**
-     * Емкость коллекции
-     */
-    private int capacity = 0;
+public class MyArrayListT<T> extends MyAbstractArrayList<T>{
+
+    private ISorterT sorter;
 
     public <T> MyArrayListT(int capacity) {
         this.capacity = capacity;
         items = new Object[this.capacity];
+        sorter = new BubbleSorterT();
     }
 
-    public int size() {
-        return count;
-    }
-    public T get(int index) {
-        return (T)items[index];
-    }
-
-    public void setSorter(ISorter sorter) {
+    public void setSorter(ISorterT sorter) {
         this.sorter = sorter;
     }
 
-    public boolean contains(T item) {
-        for (int i = 0; i < count; i++) {
-            if(((T)items[i]).equals(item))
-                return true;
-        }
-        return false;
-    }
-    /**
-     * Добавление в коллекцию
-     * @param pers новый объект
-     */
-    public void add(T pers) {
-        if (count == capacity) {
-            Person[] newArr = new Person[capacity * 2];
-            capacity = capacity * 2;
-            System.arraycopy(items, 0, newArr , 0, items.length);
-            items = newArr;
-        }
-        items[count++] = pers;
-    }
     /**
      * Удаление из коллекции по индексу
      * @param index Индекс
@@ -79,79 +46,30 @@ public class MyArrayListT<T> {
             }
         }
     }
-
-    /**
-     * Находит первый элемент, удовлетворяющий условиям указанного предиката
-     * @param predicate Условие поиска
-     */
-    public T find(Predicate<T> predicate) {
+    public void remove(Object obj) {
         for (int i = 0; i < count; i++) {
-            if (predicate.test((T)items[i]))
-                return (T)items[i];
+            if (((T)items[i]).equals(obj)) {
+                removeAt(i);
+                return;
+            }
         }
-        return null;
     }
 
     /**
      * Сортирует по заданному условию
      * @param compare Правило сравнения
-     * @param param Вид сортировки: 0 - пузырьком, 1 - шейкерная
      * @return Возвращает отсортированный массив
      */
-    public T[] sort(Comparator<T> compare, int param) {
-        switch (param) {
-            case 0: bubbleSortT((T[])items, compare); break;
-            case 1: shakerSortT((T[])items, compare); break;
-            default: return (T[])items;
-        }
+    public T[] sort(Comparator<T> compare) {
+        sorter.sort(compare, items, count);
         return (T[])items;
     }
 
-    private <T> void bubbleSortT(T[] arr, Comparator<T> compare) {
-        for (int i = count - 1; i > 0; i--) {
-            for (int j = 0; j < i; j++) {
-                if (compare.compare(arr[j], arr[j + 1]) >= 1) {
-                    T t = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = t;
-                }
-            }
-        }
-    }
-    private <T> void shakerSortT(T[] mas, Comparator<T> comp){
-        boolean wasSwapped;
-        T temp;
-        do {
-            wasSwapped=false;
-            for (int i = 0; i < count - 2; i++) {
-                if (comp.compare(mas[i], mas[i + 1])>=1) {
-                    temp = mas[i];
-                    mas[i]=mas[i+1];
-                    mas[i+1]=temp;
-                    wasSwapped=true;
-                }
-            }
-
-            if(!wasSwapped) break;
-
-            wasSwapped=false;
-            for (int j = count-2; j >= 0; j--) {
-                if(comp.compare(mas[j],mas[j+1])>=1){
-                    temp = mas[j];
-                    mas[j]=mas[j+1];
-                    mas[j+1]=temp;
-                    wasSwapped=true;
-                }
-            }
-
-        } while(wasSwapped);
-    }
-
-    public Person[] toArray() {
-        Person[] result = new Person[count];
+    public T[] toArray() {
+        Object[] result = new Person[count];
         System.arraycopy(items, 0, result, 0, count);
 
-        return  result;
+        return  (T[])result;
     }
 
     @Override

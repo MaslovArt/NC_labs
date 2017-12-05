@@ -1,12 +1,10 @@
 package NC_lab1.myCollection;
 
+import NC_lab1.myUtil.function.MyComparator;
+import NC_lab1.myUtil.function.MyPredicate;
 import NC_lab1.sorters.sortInterface.ISorter;
 import NC_lab1.sorters.sorter.BubbleSorter;
 import NC_lab1.entity.Person;
-import NC_lab1.myUtil.*;
-
-import java.util.Comparator;
-import java.util.function.Predicate;
 
 public class MyArrayList {
     private Person[] items;
@@ -96,6 +94,19 @@ public class MyArrayList {
     }
 
     /**
+     * Находит все элементы, удовлетворяющий условиям предиката
+     * @param predicate Условие поиска
+     */
+    public Person[] findAll(MyPredicate predicate) {
+        MyArrayList result = new MyArrayList(10);
+        for (int i = 0; i < count; i++) {
+            if (predicate.test(items[i]))
+                result.add(items[i]);
+        }
+        return result.toArray();
+    }
+
+    /**
      * Сортирует по заданному условию
      * @param compare Правило сравнения
      * @return Возвращает отсортированный массив
@@ -105,9 +116,16 @@ public class MyArrayList {
         return items;
     }
 
+    public Person[] toArray() {
+        Person[] result = new Person[count];
+        System.arraycopy(items, 0, result, 0, count);
+
+        return  result;
+    }
+
     @Override
     public String toString() {
-        return capacity + " " + count;
+        return MyArrayList.class.getSimpleName() + " [Емкость " + capacity + " размер " + count + "]";
     }
 
     public void print() {

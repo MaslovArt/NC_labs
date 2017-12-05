@@ -1,4 +1,4 @@
-package NC_lab1.myUtil;
+package NC_lab1.myUtil.function;
 
 import NC_lab1.entity.Person;
 

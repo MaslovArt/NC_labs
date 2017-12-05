@@ -1,10 +1,8 @@
 package NC_lab1.sorters.sorter;
 
-import NC_lab1.myUtil.MyComparator;
+import NC_lab1.myUtil.function.MyComparator;
 import NC_lab1.sorters.sortInterface.ISorter;
 import NC_lab1.entity.Person;
-
-import java.util.Comparator;
 
 public class ShakerSorter implements ISorter {
     @Override
