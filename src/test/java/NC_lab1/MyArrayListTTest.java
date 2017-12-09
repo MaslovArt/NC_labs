@@ -1,7 +1,7 @@
 package NC_lab1;
 
 import NC_lab1.entity.Person;
-import NC_lab1.myCollection.MyArrayListT;
+import NC_lab1.myCollection.MyArrayList;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class MyArrayListTTest {
 
-    private MyArrayListT<Person> people;
+    private MyArrayList<Person> people;
     private void initListWithDefaultValues() {
         people.add(new Person(new LocalDate(2010, 10, 20), "Artik"));
         people.add(new Person(new LocalDate(2000, 10, 20), "Julia"));
@@ -21,7 +21,7 @@ public class MyArrayListTTest {
 
     @Before
     public void setUp() throws Exception {
-        people = new MyArrayListT<>(8);
+        people = new MyArrayList<>(8);
     }
 
     @After
@@ -77,18 +77,6 @@ public class MyArrayListTTest {
     }
 
     @Test
-    public void remove() throws Exception {
-        initListWithDefaultValues();
-
-        assertEquals(4,people.size());
-        assertEquals("Julia", people.get(1).getSurname());
-
-        people.remove((o1)->o1.getSurname().equals("Julia"));
-        assertEquals(3,people.size());
-        assertEquals("Ann", people.get(1).getSurname());
-    }
-
-    @Test
     public void find() throws Exception {
         initListWithDefaultValues();
 
@@ -120,6 +108,21 @@ public class MyArrayListTTest {
         people.add(p1);
         actual = people.contains(p1);
         assertTrue(actual);
+    }
+
+    @Test
+    public void isEmptyTest() throws Exception {
+        assertTrue(people.isEmpty());
+        initListWithDefaultValues();
+        assertFalse(people.isEmpty());
+    }
+
+    @Test
+    public void clearTest() throws Exception {
+        initListWithDefaultValues();
+        assertFalse(people.isEmpty());
+        people.clear();
+        assertTrue(people.isEmpty());
     }
 
 }

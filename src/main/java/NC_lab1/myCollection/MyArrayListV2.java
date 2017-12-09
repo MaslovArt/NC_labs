@@ -4,18 +4,58 @@ import NC_lab1.sorters.sortInterface.ISorterT;
 import NC_lab1.entity.Person;
 import NC_lab1.sorters.sorter.BubbleSorterT;
 
+import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
-public class MyArrayList<T> extends MyAbstractArrayList<T> implements Iterable<T>{
+public class MyArrayListV2<T> implements Iterable<T>{
 
+    protected T[] items;
+    protected int count = 0;
+    protected int capacity = 0;
+    private Class colClass;
     private ISorterT sorter;
 
-    public <T> MyArrayList(int capacity) {
+    public <T> MyArrayListV2(int capacity) {
         this.capacity = capacity;
-        items = new Object[this.capacity];
         sorter = new BubbleSorterT();
+    }
+
+    public T get(int index) {
+        return items[index];
+    }
+
+    public int size() {
+        return count;
+    }
+
+    public void add(T item) {
+        if(items == null) {
+            colClass = item.getClass();
+            items = (T[]) Array.newInstance(colClass, capacity);
+        }
+        if (count == capacity) {
+            T[] newArr = (T[]) Array.newInstance(colClass, capacity * 2);
+            capacity = capacity * 2;
+            System.arraycopy(items, 0, newArr , 0, items.length);
+            items = newArr;
+        }
+        items[count++] = item;
+    }
+
+    public boolean contains(T obj) {
+        for (int i = 0; i < count; i++) {
+            if((items[i]).equals(obj))
+                return true;
+        }
+        return false;
+    }
+
+    public T[] toArray() {
+        T[] result = (T[]) Array.newInstance(colClass, count);
+        System.arraycopy(items, 0, result, 0, count);
+        return  result;
     }
 
     /**
@@ -31,20 +71,21 @@ public class MyArrayList<T> extends MyAbstractArrayList<T> implements Iterable<T
      * @param index Индекс
      */
     public void removeAt(int index){
-        Object[] newArr = new Object[capacity - 1];
+        T[] newArr = (T[]) Array.newInstance(colClass, capacity - 1);
         System.arraycopy(items, 0, newArr, 0, items.length - index - 1);
         System.arraycopy(items, index + 1, newArr, index, items.length - index - 1 );
         items = newArr;
         count--;
         capacity--;
     }
+
     /**
      * Удаляет объект из коллекции
      * @param obj Объект
      */
     public boolean remove(Object obj) {
         for (int i = 0; i < count; i++) {
-            if (((T)items[i]).equals(obj)) {
+            if ((items[i]).equals(obj)) {
                 removeAt(i);
                 return true;
             }
@@ -59,8 +100,8 @@ public class MyArrayList<T> extends MyAbstractArrayList<T> implements Iterable<T
      */
     public T find(Predicate<T> predicate) {
         for (int i = 0; i < count; i++) {
-            if (predicate.test((T)items[i]))
-                return (T)items[i];
+            if (predicate.test(items[i]))
+                return items[i];
         }
         return null;
     }
@@ -72,19 +113,14 @@ public class MyArrayList<T> extends MyAbstractArrayList<T> implements Iterable<T
      */
     public T[] sort(Comparator<T> compare) {
         sorter.sort(compare, items, count);
-        return (T[])items;
+        return items;
     }
 
-    /**
-     *
-     */
-    @Override
     public void clear() {
-        items = new Object[capacity];
+        items = (T[]) Array.newInstance(colClass, capacity);
         count = 0;
     }
 
-    @Override
     public boolean isEmpty() {
         return count == 0;
     }
@@ -95,7 +131,7 @@ public class MyArrayList<T> extends MyAbstractArrayList<T> implements Iterable<T
     }
     public void print() {
         for (int i = 0; i < count; i++) {
-            System.out.println((T)items[i].toString());
+            System.out.println(items[i].toString());
         }
     }
 
@@ -112,7 +148,7 @@ public class MyArrayList<T> extends MyAbstractArrayList<T> implements Iterable<T
         }
         @Override
         public T next() {
-            return (T)items[currentIndex++];
+            return items[currentIndex++];
         }
     }
 }

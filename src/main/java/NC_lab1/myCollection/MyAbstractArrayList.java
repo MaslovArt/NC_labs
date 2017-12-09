@@ -4,20 +4,19 @@ import NC_lab1.entity.Person;
 
 import java.util.function.Predicate;
 
-public abstract class MyAbstractArrayList<T> implements IMyList<T> {
+public abstract class MyAbstractArrayList<T> implements IMyCollection<T> {
 
     protected Object[] items;
     protected int count = 0;
     protected int capacity = 0;
 
-    @Override
-    public int size() {
-        return count;
+    public T get(int index) {
+        return (T)items[index];
     }
 
     @Override
-    public T get(int index) {
-        return (T)items[index];
+    public int size() {
+        return count;
     }
 
     @Override
@@ -32,16 +31,7 @@ public abstract class MyAbstractArrayList<T> implements IMyList<T> {
     }
 
     @Override
-    public abstract void remove(T item);
-
-    @Override
-    public T find(Predicate<T> predicate) {
-        for (int i = 0; i < count; i++) {
-            if (predicate.test((T)items[i]))
-                return (T)items[i];
-        }
-        return null;
-    }
+    public abstract boolean remove(T item);
 
     @Override
     public boolean contains(T obj) {
@@ -50,5 +40,12 @@ public abstract class MyAbstractArrayList<T> implements IMyList<T> {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public T[] toArray() {
+        Object[] result = new Object[count];
+        System.arraycopy(items, 0, result, 0, count);
+        return  (T[])result;
     }
 }

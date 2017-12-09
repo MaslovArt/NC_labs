@@ -2,13 +2,12 @@ package NC_lab1.myCollection;
 
 import java.util.function.Predicate;
 
-public interface IMyList<T> {
-
+public interface IMyCollection<T> {
     public int size();
-    public T get(int index);
-
+    public void clear();
+    public boolean isEmpty();
     public void add(T item);
-    public void remove(T item);
-    public T find(Predicate<T> predicate);
+    public boolean remove(T item);
     public boolean contains(T obj);
+    public T[] toArray();
 }
