@@ -108,7 +108,7 @@ public class MyLinkedListTest {
         for (Person p : expected) {
             list.add(p);
         }
-        
+
         assertArrayEquals(expected, list.toArray());
     }
 
